@@ -1,30 +1,31 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <button type="button" class="btn btn-info">Add</button>
+  <table class="table table-dark table-striped text-center text-capitalize">
+    <thead>
+      <tr>
+        <th>row</th>
+        <th>task Name</th>
+        <th>how Long</th>
+        <th>status</th>
+        <th>delete</th>
+        <th>edit</th>
+        <th>change status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>chart component</td>
+        <td>3Days</td>
+        <td>Active</td>
+        <td><button type="button" class="btn btn-danger">Delete</button></td>
+        <td><button type="button" class="btn btn-warning">Edit</button></td>
+        <td>
+          <button type="button" class="btn btn-success">Change Stat</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<script setup></script>
