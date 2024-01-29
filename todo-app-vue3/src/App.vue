@@ -25,7 +25,12 @@
           <td>{{ index + 1 }}</td>
           <td>{{ item.taskName }}</td>
           <td>{{ item.howLong }}</td>
-          <td>{{ item.status }}</td>
+          <td>
+            <span class="badge bg-success" v-if="item.status === true"
+              >Active</span
+            >
+            <span class="badge bg-danger" v-else>Inactive</span>
+          </td>
           <td>
             <button type="button" class="btn btn-danger rounded-pill">
               Delete
@@ -42,7 +47,11 @@
             </button>
           </td>
           <td>
-            <button type="button" class="btn btn-success rounded-pill">
+            <button
+              @click="changeStatus(item)"
+              type="button"
+              class="btn btn-success rounded-pill"
+            >
               Change Status
             </button>
           </td>
@@ -131,11 +140,21 @@
 </template>
 
 <script setup>
-const todoList = [
-  { taskName: "a", howLong: "2weeks", status: false },
+import { reactive } from "vue";
+
+const todoList = reactive([
+  { taskName: "a", howLong: "2weeks", status: true },
   { taskName: "b", howLong: "3weeks", status: false },
   { taskName: "c", howLong: "4weeks", status: false },
-  { taskName: "d", howLong: "5weeks", status: false },
+  { taskName: "d", howLong: "5weeks", status: true },
   { taskName: "e", howLong: "6weeks", status: false },
-];
+]);
+
+// function changeStatus(index) {
+//   todoList[index].status = !todoList[index].status;
+// }
+
+function changeStatus(item) {
+  item.status = !item.status;
+}
 </script>
