@@ -141,6 +141,8 @@
 
 <script setup>
 import { reactive } from "vue";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 const todoList = reactive([
   { taskName: "a", howLong: "2weeks", status: true },
@@ -155,6 +157,15 @@ const todoList = reactive([
 // }
 
 function changeStatus(item) {
-  item.status = !item.status;
+  if (confirm("Are you sure to change the status!") == true) {
+    item.status = !item.status;
+
+    toast("Good, it done", {
+      type: "success",
+      position: "top-center",
+      transition: "flip",
+      dangerouslyHTMLString: true,
+    });
+  }
 }
 </script>
