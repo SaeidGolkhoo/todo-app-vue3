@@ -1,36 +1,40 @@
 <template>
-  <div class="container">
+  <div class="container py-5">
     <button
       type="button"
-      class="btn btn-info mb-2"
+      class="btn btn-info mb-2 rounded-pill px-5"
       data-bs-toggle="modal"
       data-bs-target="#addModal"
     >
-      Add
+      Add Todo
     </button>
     <table class="table table-dark table-striped text-center text-capitalize">
       <thead>
         <tr>
-          <th>row</th>
-          <th>task Name</th>
-          <th>how Long</th>
-          <th>status</th>
-          <th>delete</th>
-          <th>edit</th>
-          <th>change status</th>
+          <th><i class="bi bi-123"></i> row</th>
+          <th><i class="bi bi-code-slash"></i> task Name</th>
+          <th><i class="bi bi-alarm"></i> how Long</th>
+          <th><i class="bi bi-lightbulb"></i> status</th>
+          <th><i class="bi bi-trash"></i> delete</th>
+          <th><i class="bi bi-pen"></i> edit</th>
+          <th><i class="bi bi-lightbulb"></i> change status</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>chart component</td>
-          <td>3Days</td>
-          <td>Active</td>
-          <td><button type="button" class="btn btn-danger">Delete</button></td>
+        <tr v-for="(item, index) in todoList">
+          <td>{{ index + 1 }}</td>
+          <td>{{ item.taskName }}</td>
+          <td>{{ item.howLong }}</td>
+          <td>{{ item.status }}</td>
+          <td>
+            <button type="button" class="btn btn-danger rounded-pill">
+              Delete
+            </button>
+          </td>
           <td>
             <button
               type="button"
-              class="btn btn-warning"
+              class="btn btn-warning rounded-pill"
               data-bs-toggle="modal"
               data-bs-target="#editModal"
             >
@@ -38,7 +42,9 @@
             </button>
           </td>
           <td>
-            <button type="button" class="btn btn-success">Change Status</button>
+            <button type="button" class="btn btn-success rounded-pill">
+              Change Status
+            </button>
           </td>
         </tr>
       </tbody>
@@ -62,16 +68,19 @@
           <div class="modal-body">
             <input
               type="text"
-              class="form-control mt-3"
+              class="form-control mt-3 rounded-pill"
               placeholder="Task Name"
             />
             <input
               type="text"
-              class="form-control mt-3"
+              class="form-control mt-3 rounded-pill"
               placeholder="How Long"
             />
             <div class="d-grid">
-              <button type="button" class="btn btn-block btn-success mt-3">
+              <button
+                type="button"
+                class="btn btn-block btn-success mt-3 rounded-pill"
+              >
                 Add Todo
               </button>
             </div>
@@ -98,16 +107,19 @@
           <div class="modal-body">
             <input
               type="text"
-              class="form-control mt-3"
+              class="form-control mt-3 rounded-pill"
               placeholder="Task Name"
             />
             <input
               type="text"
-              class="form-control mt-3"
+              class="form-control mt-3 rounded-pill"
               placeholder="How Long"
             />
             <div class="d-grid">
-              <button type="button" class="btn btn-block btn-success mt-3">
+              <button
+                type="button"
+                class="btn btn-block btn-success mt-3 rounded-pill"
+              >
                 Edit Todo
               </button>
             </div>
@@ -118,4 +130,12 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const todoList = [
+  { taskName: "a", howLong: "2weeks", status: false },
+  { taskName: "b", howLong: "3weeks", status: false },
+  { taskName: "c", howLong: "4weeks", status: false },
+  { taskName: "d", howLong: "5weeks", status: false },
+  { taskName: "e", howLong: "6weeks", status: false },
+];
+</script>
