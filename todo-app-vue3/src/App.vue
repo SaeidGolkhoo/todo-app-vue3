@@ -8,6 +8,7 @@
     >
       Add Todo
     </button>
+    <!-- TouristsList.vue -->
     <table class="table table-dark table-striped text-center text-capitalize">
       <thead>
         <tr>
@@ -32,7 +33,11 @@
             <span class="badge bg-danger" v-else>Inactive</span>
           </td>
           <td>
-            <button type="button" class="btn btn-danger rounded-pill">
+            <button
+              @click="deleteRow(index)"
+              type="button"
+              class="btn btn-danger rounded-pill"
+            >
               Delete
             </button>
           </td>
@@ -42,6 +47,7 @@
               class="btn btn-warning rounded-pill"
               data-bs-toggle="modal"
               data-bs-target="#editModal"
+              @click="editTodo(index)"
             >
               Edit
             </button>
@@ -59,6 +65,8 @@
       </tbody>
     </table>
 
+    <!--ModalBs.vue-->
+    <!--AddForm-->
     <!-- The Add Modal -->
     <div class="modal fade" id="addModal">
       <div class="modal-dialog">
@@ -70,23 +78,33 @@
               type="button"
               class="btn-close"
               data-bs-dismiss="modal"
+              ref="btnModalAddClose"
             ></button>
           </div>
 
           <!-- Modal body -->
           <div class="modal-body">
+            <div
+              v-if="showErrorForm === true"
+              class="alert alert-danger text-center"
+            >
+              Please fill the form.
+            </div>
             <input
               type="text"
               class="form-control mt-3 rounded-pill"
               placeholder="Task Name"
+              v-model="taskName"
             />
             <input
               type="text"
               class="form-control mt-3 rounded-pill"
               placeholder="How Long"
+              v-model="howLong"
             />
             <div class="d-grid">
               <button
+                @click="addTodoList()"
                 type="button"
                 class="btn btn-block btn-success mt-3 rounded-pill"
               >
@@ -98,6 +116,8 @@
       </div>
     </div>
 
+    <!--ModalBs.vue-->
+    <!--EditForm.vue-->
     <!-- The Edit Modal -->
     <div class="modal fade" id="editModal">
       <div class="modal-dialog">
@@ -118,16 +138,19 @@
               type="text"
               class="form-control mt-3 rounded-pill"
               placeholder="Task Name"
+              v-model="editTaskName"
             />
             <input
               type="text"
               class="form-control mt-3 rounded-pill"
               placeholder="How Long"
+              v-model="editHowLong"
             />
             <div class="d-grid">
               <button
                 type="button"
                 class="btn btn-block btn-success mt-3 rounded-pill"
+                @click="editArray()"
               >
                 Edit Todo
               </button>
@@ -140,9 +163,19 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
+
+const taskName = ref("");
+const howLong = ref("");
+const showErrorForm = ref(false);
+
+const editTaskName = ref("");
+const editHowLong = ref("");
+const indexArray = ref(0);
+
+const btnModalAddClose = ref(null);
 
 const todoList = reactive([
   { taskName: "a", howLong: "2weeks", status: true },
@@ -152,9 +185,16 @@ const todoList = reactive([
   { taskName: "e", howLong: "6weeks", status: false },
 ]);
 
-// function changeStatus(index) {
-//   todoList[index].status = !todoList[index].status;
-// }
+function editTodo(index) {
+  editTaskName.value = todoList[index].taskName;
+  editHowLong.value = todoList[index].howLong;
+  indexArray.value = index;
+}
+
+function editArray() {
+  todoList[indexArray.value].taskName = editTaskName.value;
+  todoList[indexArray.value].howLong = editHowLong.value;
+}
 
 function changeStatus(item) {
   if (confirm("Are you sure to change the status!") == true) {
@@ -167,5 +207,31 @@ function changeStatus(item) {
       dangerouslyHTMLString: true,
     });
   }
+}
+function deleteRow(index) {
+  if (confirm("Are you sure to delete!") == true) {
+    todoList.splice(index, 1);
+    toast("Good, it deleted!", {
+      type: "success",
+      position: "top-center",
+      transition: "flip",
+      dangerouslyHTMLString: true,
+    });
+  }
+}
+function addTodoList() {
+  if (taskName.value != "" && howLong.value != "") {
+    showErrorForm.value = false;
+
+    todoList.push({
+      taskName: taskName.value,
+      howLong: howLong.value,
+      status: true,
+    });
+
+    btnModalAddClose.value.click();
+    taskName.value = "";
+    howLong.value = "";
+  } else showErrorForm.value = true;
 }
 </script>
